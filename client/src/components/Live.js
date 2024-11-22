@@ -1,19 +1,15 @@
-import { SocketContext } from "./RehearsalRoom"
 import { useEffect, useState, useContext } from "react";
-import { useGetIsAdmin } from "../hooks/useGetIsAdmin"
 import './Live.css'
-
 
 
 export const Live = ({songData, lyricsOrChords}) => {
 
-    const { socket, roomId, leaveRoom, logout } = useContext(SocketContext)
-    const isAdmin = useGetIsAdmin()
+
     const [isScrolling, setIsScrolling] = useState(false);
 
     let scrollInterval;
 
-    const toggleScroll = () => { 
+    const changeScroll = () => { 
         setIsScrolling((prev) => !prev);
     };
 
@@ -43,7 +39,7 @@ export const Live = ({songData, lyricsOrChords}) => {
                 ))}
             </div>
             
-            <button onClick={toggleScroll} className="scroll-btn">
+            <button onClick={changeScroll} className="scroll-btn">
                 {isScrolling ? 'Stop Scroll' : 'Start Scroll'}
             </button>
         </div>

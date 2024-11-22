@@ -1,10 +1,6 @@
-import { useContext } from "react"
-import { SocketContext } from "./RehearsalRoom"
 
 
 export const MainPlayer = () => {
-
-    const { leaveRoom, logout } = useContext(SocketContext)
 
     return (
         <div>

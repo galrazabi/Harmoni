@@ -5,7 +5,7 @@ import './Results.css'
 
 export const Results = ({songsList, setIsMain}) => {
 
-    const {socket, roomId, leaveRoom, logout} = useContext(SocketContext)
+    const {socket, roomId} = useContext(SocketContext)
 
     const goToLive = (song) => {
         socket.emit('adminStartRehearsal', {roomId, song})

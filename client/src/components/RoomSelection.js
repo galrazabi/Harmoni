@@ -5,7 +5,7 @@ import { useEffect, useState, useContext } from "react";
 
 export const RoomSelection = () => { 
 
-    const {socket, logout } = useContext(SocketContext)
+    const { socket } = useContext(SocketContext)
     const isAdmin = useGetIsAdmin()
     const [roomID, setRoomID ] = useState("")
 

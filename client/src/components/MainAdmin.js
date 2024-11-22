@@ -1,5 +1,4 @@
-import { useState, useContext } from "react"
-import { SocketContext } from "./RehearsalRoom"
+import { useState } from "react"
 import { useCookies } from 'react-cookie'
 import axios from "axios"
 
@@ -8,7 +7,6 @@ export const MainAdmin = ({ setSongsList, setIsMain}) => {
 
     const [searchTerm, setSearchTerm] = useState("")
     const [cookie, _ ] = useCookies("access_token")
-    const { leaveRoom, logout } = useContext(SocketContext)
     
 
 
