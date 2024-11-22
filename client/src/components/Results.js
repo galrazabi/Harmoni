@@ -13,15 +13,10 @@ export const Results = ({songsList, setIsMain}) => {
     
     return (
             <div  className="container-fullscreen">
-                {/* <div className="nav-bar">
-                    <button className="logout-btn" onClick={() => setIsMain(true)}>Back</button>
-                    <button className="logout-btn" onClick={logout}>Logout</button>
-                    <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>
-                </div> */}
                 <h1>Showing the Results</h1>
 
                 {songsList.length === 0 ? 
-                    <p className="no-results">No songs found. Please try a different search.</p>
+                    <p className="description">No songs found. Please try a different search.</p>
                     :
                     <div>
                         <p className="description">Browse through the list below to find your song and start the rehearsal session.</p>
@@ -40,7 +35,8 @@ export const Results = ({songsList, setIsMain}) => {
                         </ul>
                     </div>
                 }
-                <button className="logout-btn" onClick={() => setIsMain(true)}>Back To Search Songs</button>
+                <br/>
+                <button onClick={() => setIsMain(true)}>Back To Search Songs</button>
             </div>
     )
 }

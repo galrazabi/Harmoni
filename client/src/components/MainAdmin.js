@@ -2,8 +2,6 @@ import { useState, useContext } from "react"
 import { SocketContext } from "./RehearsalRoom"
 import { useCookies } from 'react-cookie'
 import axios from "axios"
-import './MainAdmin.css'
-
 
 
 export const MainAdmin = ({ setSongsList, setIsMain}) => {
@@ -26,13 +24,8 @@ export const MainAdmin = ({ setSongsList, setIsMain}) => {
         }
     }
 
-    return (
-        <div>                
-            {/* <div className="nav-bar">
-                <button className="logout-btn" onClick={logout}>Logout</button>
-                <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>
-            </div> */}
-        <div className="main-admin">
+    return (                
+        <div>
 
             <h1>Search any song</h1>
             <br />
@@ -41,7 +34,5 @@ export const MainAdmin = ({ setSongsList, setIsMain}) => {
                 <button type="submit">Search</button>
             </form>
         </div>
-        </div>
-
     )
 }

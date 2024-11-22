@@ -1,6 +1,6 @@
 import express from 'express';
 import {verifyToken} from "../verifyToken.js"
-import { searchSongsDB } from "../databaseOperations.js"
+import { searchSongsDB } from "../../db/databaseOperations.js"
  
 
 const router = express.Router()

@@ -32,16 +32,9 @@ export const Live = ({songData, lyricsOrChords}) => {
         return () => clearInterval(scrollInterval); 
     }, [isScrolling]);
 
-    // const endRehearsal = () => {
-    //     socket.emit("adminEndRehearsal", roomId)
-    // }
+    
     return (
         <div className="live">
-            {/* <div className="nav-bar">
-                <button className="logout-btn" onClick={logout}>Logout</button>
-                <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>
-                {isAdmin && <button className="logout-btn" onClick={endRehearsal}>Quit</button>}
-            </div>   */}
             <h1 className="song-title">{songData.name}</h1>
             <h4 className="song-artist">{songData.artist}</h4>
             <div className="lyrics">

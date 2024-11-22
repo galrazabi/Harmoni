@@ -1,4 +1,3 @@
-
 .live {
     display: flex;
     flex-direction: column;
@@ -8,19 +7,6 @@
     color: #ffffff;
     overflow-y: hidden;
 }
-
-.nav-bar {
-    display: flexbox;
-    justify-content: space-between; 
-    align-items: center;
-    width: 100%;
-    max-width: 600px; 
-    margin: 0 auto; 
-    margin-bottom: 50px;
-    padding: 10px 20px;
-    box-sizing: border-box;
-  }
-
 
 .song-title {
     font-size: 2.5em;

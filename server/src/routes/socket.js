@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { getLyrics, formatLyricsAndChords } from '../databaseOperations.js'
+import { getLyrics, formatLyricsAndChords } from '../../db/databaseOperations.js'
 import { getUserInstrumentFromDB } from './users.js'
 import { v4 as uuidv4 } from 'uuid'
 

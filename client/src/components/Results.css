@@ -1,11 +1,8 @@
-
-
 .description {
     color: #d3d3d3;
     text-align: center;
     margin-bottom: 10px;
 }
-
 
 .song-list {
     padding: 10%;
@@ -56,14 +53,6 @@
 .song-name,
 .artist-name {
     font-size: 1em;
-}
-
-
-.no-results {
-    font-size: 1em;
-    color: #d3d3d3;
-    text-align: center;
-    margin-top: 20px;
 }
 
 
