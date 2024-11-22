@@ -3,7 +3,6 @@ import { useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import "./Auth.css"
-import config from '../config.json' ;
 
 export const Login = () => {
 
@@ -16,7 +15,7 @@ export const Login = () => {
     const onSubmit = async (event) => {
         event.preventDefault()
         try{
-            const response = await axios.post(`${config.backend.url}/users/login`, {username, password})
+            const response = await axios.post(`${process.env.REACT_APP_URL}/users/login`, {username, password})
             console.log(response.data);
             
             window.localStorage.setItem("userId", await response.data.userId)

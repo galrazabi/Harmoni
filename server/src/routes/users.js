@@ -2,10 +2,12 @@ import express from 'express';
 import { UsersModel } from '../models/Users.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from '../../config.json' assert { type: 'json' };
+import dotenv from 'dotenv';
 
-const slatRounds = Number(config.SALT_ROUNDS)
-const secret = config.SECRET
+dotenv.config();
+
+const slatRounds = Number(process.env.SALT_ROUNDS)
+const secret = process.env.SECRET
 const router = express.Router()
 
 

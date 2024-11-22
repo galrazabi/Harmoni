@@ -7,8 +7,8 @@ import { MainPlayer } from './MainPlayer'
 import { SearchSong } from "./SearchSong";
 import { io } from 'socket.io-client';
 import {Live} from './Live'
-import config from '../config.json' ;
 import { RoomSelection } from "./RoomSelection";
+
 
 
 export const SocketContext = createContext();
@@ -28,7 +28,7 @@ export const RehearsalRoom = () => {
 
 
     useEffect(() => {
-        const newSocket = io(`${config.backend.url}`, {
+        const newSocket = io(`${process.env.REACT_APP_URL}`, {
             query : {userId}
         });
         setSocket(newSocket);
