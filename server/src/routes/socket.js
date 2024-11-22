@@ -12,7 +12,7 @@ const setUpSocket = (server) => {
           methods: ['GET', 'POST'],
         }
       });
-
+ 
     const categorizeUserByInstrument = async (socket) => {
 
       const userId = socket.handshake.query.userId;

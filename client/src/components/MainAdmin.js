@@ -17,7 +17,7 @@ export const MainAdmin = ({ setSongsList, setIsMain}) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         try{
-            const response = await axios.get(`${config.backend.url}/songs/match/song/list/${searchTerm}`, {headers: {authorization : cookie.access_token}});
+            const response = await axios.get(`${config.backend.url}/songs/song/list/${searchTerm}`, {headers: {authorization : cookie.access_token}});
             setSongsList(response.data.matchingSongs)
             setIsMain(false)
 

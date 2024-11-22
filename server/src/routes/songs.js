@@ -5,7 +5,7 @@ import { searchSongsDB } from "../databaseOperations.js"
 
 const router = express.Router()
 
-router.get('/match/song/list/:searchTerm', verifyToken, (req, res) => {
+router.get('/song/list/:searchTerm', verifyToken, (req, res) => {
 
     const { searchTerm } = req.params;
     const matchingSongs = searchSongsDB(searchTerm);
