@@ -2,26 +2,25 @@ import { useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
-import "./Auth.css"
+import "./Login.css"
 
 export const Login = () => {
 
-    const [username, setUsername ] = useState("")
-    const [password, setPassword ] = useState("")
+    const [username, setUsername ] = useState("");
+    const [password, setPassword ] = useState("");
 
-    const [_, setCookie] = useCookies("")
-    const navigate = useNavigate()
+    const [_, setCookie] = useCookies("");
+    const navigate = useNavigate();
 
     const onSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
+
         try{
-            const response = await axios.post(`${process.env.REACT_APP_URL}/users/login`, {username, password})
+            const response = await axios.post(`${process.env.REACT_APP_URL}/users/login`, {username, password});
+
             console.log(response.data);
-            
-            window.localStorage.setItem("userId", await response.data.userId)
-            window.localStorage.setItem("isAdmin", await response.data.isAdmin)
-            setCookie("access_token", await response.data.token)
-            navigate('/rehearsalroom')
+            setCookie("access_token", await response.data.token);
+            navigate('/rehearsalroom');
 
         } catch(err) {
             if (err.response && err.response.status === 401) {

@@ -1,21 +1,18 @@
 import { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import "./Auth.css"
+import "./Signup.css"
 
 
-export const Signup = () => {
+export const Signup = ({isAdmin}) => {
 
-    const [username, setUsername ] = useState("")
-    const [password, setPassword ] = useState("")
+    const [username, setUsername ] = useState("");
+    const [password, setPassword ] = useState("");
 
-    const location = useLocation()
-    const navigate = useNavigate()
-
-    const isAdmin = location.pathname.includes("/admin")
+    const navigate = useNavigate();
 
     const onSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
         if (!username || !password) {
             alert("Username and password are required.");
@@ -23,15 +20,11 @@ export const Signup = () => {
         }
         try{
 
-            const instrument = document.getElementById("instrument").value
-            
-            if (isAdmin){
-                const response = await axios.post(`${process.env.REACT_APP_URL}/users/signup/admin`, {username, password, instrument})
-            }else {
-                const response = await axios.post(`${process.env.REACT_APP_URL}/users/signup`, {username, password, instrument})
-            }
-            
-            navigate("/")
+            const instrument = document.getElementById("instrument").value;
+
+            await axios.post(`${process.env.REACT_APP_URL}/users/signup`, {username, password, instrument, isAdmin });
+
+            navigate("/");
             
 
         } catch(err) {

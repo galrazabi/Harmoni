@@ -19,7 +19,7 @@ const loadDataFromFilePath = (filePath) => {
 
 export const getLyrics = (song) => {
     try {
-        const lyricsData = loadDataFromFilePath(song.lyrics_chords_path)
+        const lyricsData = loadDataFromFilePath(song.lyrics_chords_path);
         
         const lyricsLines = lyricsData.map(line => 
             line.map(part => part.lyrics).join(' ')
@@ -40,7 +40,7 @@ const reverseString = (str) => {
 export const formatLyricsAndChords = (song) => {
     try {
 
-        const lyricsAndChordsData = loadDataFromFilePath(song.lyrics_chords_path)
+        const lyricsAndChordsData = loadDataFromFilePath(song.lyrics_chords_path);
 
         const formattedOutput = [];
 
@@ -63,7 +63,7 @@ export const formatLyricsAndChords = (song) => {
                     formattedOutput.push(reverseString(chordsLine));
                     break;
                 default:
-                    formattedOutput.push(chordsLine)
+                    formattedOutput.push(chordsLine);
             }
             
             formattedOutput.push(lyricsLine.trim());  
@@ -86,7 +86,7 @@ export const searchSongsDB = (searchTerm) => {
             return true;
         }
         
-        return getLyrics(song).some(line => line.toLowerCase().includes(searchTerm.toLowerCase()))
+        return getLyrics(song).some(line => line.toLowerCase().includes(searchTerm.toLowerCase()));
     });
 };
 

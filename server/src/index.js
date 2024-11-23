@@ -15,22 +15,22 @@ const app = express();
 const server = http.createServer(app);
 
 
-app.use(express.json())
+app.use(express.json());
 app.use(cors({
     origin: '*',
     credentials: true
   }));
 
-setUpSocket(server)
+setUpSocket(server);
 
-app.use('/users', userRouter)
-app.use("/songs", songRouter)
+app.use('/users', userRouter);
+app.use("/songs", songRouter);
 
-const mongoUri = process.env.MONGO_URI 
+const mongoUri = process.env.MONGO_URI;
 mongoose.connect(mongoUri)
     .then(() => console.log("DATABASE CONNECTED"))
     .catch(() => console.log("FAILD TO CONNECT DATABASE"))
 
-const port = process.env.PORT
-server.listen(port, () => console.log("SERVER STARTED"))
+const port = process.env.PORT;
+server.listen(port, () => console.log("SERVER STARTED"));
 

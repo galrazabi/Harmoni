@@ -16,15 +16,15 @@ export const SocketContext = createContext();
 export const RehearsalRoom = () => {
 
     const [socket, setSocket] = useState(null);
-    const [ isLive, setIsLive ] = useState(false)
-    const [lyricsOrChords, setLyricsOrChords] = useState([])
-    const [songData, setSongData] = useState({})
-    const [roomId, setRoomId ] = useState("")
-    const navigate = useNavigate()
+    const [ isLive, setIsLive ] = useState(false);
+    const [lyricsOrChords, setLyricsOrChords] = useState([]);
+    const [songData, setSongData] = useState({});
+    const [roomId, setRoomId ] = useState("");
+    const navigate = useNavigate();
 
-    const userId = useGetUserId()
-    const isAdmin = useGetIsAdmin()
-    const [_, setCookie] = useCookies(["access_token"])
+    const userId = useGetUserId();
+    const isAdmin = useGetIsAdmin();
+    const [_, setCookie] = useCookies(["access_token"]);
 
 
     useEffect(() => {
@@ -38,29 +38,29 @@ export const RehearsalRoom = () => {
         });
 
         const handleJoinRoomSuccessfully = (roomID) => {
-            setRoomId(roomID)
+            setRoomId(roomID);
         }
 
         const handleStartRehearsal = () => {
-            setIsLive(true)
+            setIsLive(true);
         };
 
         const handleEndRehearsal = () => {
-            setIsLive(false)
+            setIsLive(false);
         };
 
         const handleLyricsAndChords = ({song ,lyricsAndChords}) => {
-            setLyricsOrChords(lyricsAndChords)
-            setSongData(song)
+            setLyricsOrChords(lyricsAndChords);
+            setSongData(song);
         };
 
         const handleLyrics = ({song ,lyrics}) => {
-            setLyricsOrChords(lyrics)
-            setSongData(song)
+            setLyricsOrChords(lyrics);
+            setSongData(song);
         };
 
         const handleError = (err) => {
-            alert(err)
+            alert(err);
         }
 
         newSocket.on('joinRoomSuccessfully', handleJoinRoomSuccessfully)
@@ -84,28 +84,26 @@ export const RehearsalRoom = () => {
 
 
     const endRehearsal = () => {
-        socket.emit("adminEndRehearsal", roomId)
+        socket.emit("adminEndRehearsal", roomId);
     }
 
     
     const leaveRoom = () => {
         if(roomId !== ""){
             if (isAdmin) {
-                socket.emit("adminEndRehearsal", roomId)
+                socket.emit("adminEndRehearsal", roomId);
             }
-            socket.emit("leaveRoom", roomId)
-            setRoomId("")
+            socket.emit("leaveRoom", roomId);
+            setRoomId("");
         }
     }
 
     const logout = () => {
         if (isAdmin && isLive) { 
-            socket.emit("adminEndRehearsal", roomId)
+            socket.emit("adminEndRehearsal", roomId);
         }
-        setCookie("access_token", "")
-        window.localStorage.removeItem("userId")
-        window.localStorage.removeItem("isAdmin")
-        navigate("/")
+        setCookie("access_token", "");
+        navigate("/");
     }
 
 

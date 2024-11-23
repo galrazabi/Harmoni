@@ -3,7 +3,7 @@ import {verifyToken} from "../verifyToken.js"
 import { searchSongsDB } from "../../db/songsDatabaseOperations.js"
  
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/song/list/:searchTerm', verifyToken, (req, res) => {
 
@@ -12,4 +12,4 @@ router.get('/song/list/:searchTerm', verifyToken, (req, res) => {
     res.json({matchingSongs});
 });
 
-export {router as songRouter}
+export {router as songRouter};

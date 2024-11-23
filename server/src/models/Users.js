@@ -7,4 +7,4 @@ const UsersSchema = new mongoose.Schema({
     isAdmin:{type:Boolean, required: true}
 })
 
-export const UsersModel = mongoose.model("Harmoni-users", UsersSchema)
+export const UsersModel = mongoose.model("Harmoni-users", UsersSchema);

@@ -5,8 +5,8 @@ import axios from "axios"
 
 export const MainAdmin = ({ setSongsList, setIsMain}) => {
 
-    const [searchTerm, setSearchTerm] = useState("")
-    const [cookie, _ ] = useCookies("access_token")
+    const [searchTerm, setSearchTerm] = useState("");
+    const [cookie, _ ] = useCookies("access_token");
     
 
 
@@ -15,10 +15,10 @@ export const MainAdmin = ({ setSongsList, setIsMain}) => {
         try{
             const response = await axios.get(`${process.env.REACT_APP_URL}/songs/song/list/${searchTerm}`, {headers: {authorization : cookie.access_token}});
             setSongsList(response.data.matchingSongs)
-            setIsMain(false)
+            setIsMain(false);;
 
         }catch(err) {
-            console.error(err)
+            console.error(err);
         }
     }
 

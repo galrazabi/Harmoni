@@ -5,8 +5,8 @@ import { useState } from 'react'
 
 export const SearchSong = () => {
 
-    const [songsList , setSongsList ] = useState([])
-    const [isMain, setIsMain ] = useState(true)
+    const [songsList , setSongsList ] = useState([]);
+    const [isMain, setIsMain ] = useState(true);
     
     return (
         <div>

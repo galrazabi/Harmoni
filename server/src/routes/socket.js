@@ -17,38 +17,39 @@ const setUpSocket = (server) => {
 
       const userId = socket.handshake.query.userId;
 
-      const instrument = await getUserInstrumentFromDB( userId )
+      const instrument = await getUserInstrumentFromDB( userId );
 
-      socket.role = instrument
+      socket.role = instrument;
     }
+
 
     io.on("connection", (socket) => {
 
-        console.log("user connected: " + socket.id)
+        console.log("user connected: " + socket.id);
         
-        categorizeUserByInstrument(socket)
+        categorizeUserByInstrument(socket);
 
         const handleSendingLyricsAndChords = (roomId, song, lyrics, lyricsAndChords) => {
 
-          const roomSockets = io.sockets.adapter.rooms.get(roomId)
+          const roomSockets = io.sockets.adapter.rooms.get(roomId);
 
           if ( !roomSockets) {
-            socket.emit('error', `Room ${roomId} does not exist or is empty`)
+            socket.emit('error', `Room ${roomId} does not exist or is empty`);
             return;
           }
 
           roomSockets.forEach((socketId) => {
-            const userSocket = io.sockets.sockets.get(socketId)
+            const userSocket = io.sockets.sockets.get(socketId);
 
             if (!userSocket) {
-              socket.emit('error', `User ${roomId} does not exist`)
+              socket.emit('error', `User ${roomId} does not exist`);
               return;
             }
 
             if (userSocket.role == "vocals"){
-              io.to(socketId).emit('sendLyrics', {song, lyrics})
+              io.to(socketId).emit('sendLyrics', {song, lyrics});
             } else {
-              io.to(socketId).emit('sendLyricsAndChords', {song, lyricsAndChords})
+              io.to(socketId).emit('sendLyricsAndChords', {song, lyricsAndChords});
             }
 
           })
@@ -57,46 +58,46 @@ const setUpSocket = (server) => {
 
         const handleJoinRoom = (roomId) => {
 
-          socket.join(roomId)
-          socket.emit('joinRoomSuccessfully', roomId)
-          console.log(`User ${socket.id} joined room ${roomId} `)
+          socket.join(roomId);
+          socket.emit('joinRoomSuccessfully', roomId);
+          console.log(`User ${socket.id} joined room ${roomId} `);
           
         }
 
         socket.on('createRoom', () => {
           const roomId = uuidv4();
-          handleJoinRoom(roomId)
+          handleJoinRoom(roomId);
         })
 
         socket.on('joinRoom', (roomId) => {
-          const rooms = io.sockets.adapter.rooms
+          const rooms = io.sockets.adapter.rooms;
           if (rooms.has(roomId)) {
-            handleJoinRoom(roomId)
+            handleJoinRoom(roomId);
           } else {
-            socket.emit('error', 'Room does not exist')
+            socket.emit('error', 'Room does not exist');
           }
         })
 
         socket.on('leaveRoom', (roomId) => {
-          const rooms = io.sockets.adapter.rooms
+          const rooms = io.sockets.adapter.rooms;
           if (rooms.has(roomId)) {
-            socket.leave(roomId)
-            console.log(`User ${socket.id} left room ${roomId} `)
+            socket.leave(roomId);
+            console.log(`User ${socket.id} left room ${roomId} `);
           } else {
-            socket.emit('error', 'Room does not exist')
+            socket.emit('error', 'Room does not exist');
           }
         })
 
         socket.on('adminStartRehearsal', ({roomId, song}) => { 
-          console.log('admin Start Rehearsal') 
-          const lyrics = getLyrics(song)
-          const lyricsAndChords = formatLyricsAndChords(song)
-          io.to(roomId).emit('startRehearsal') 
-          handleSendingLyricsAndChords(roomId, song, lyrics, lyricsAndChords)
+          console.log('admin Start Rehearsal') ;
+          const lyrics = getLyrics(song);
+          const lyricsAndChords = formatLyricsAndChords(song);
+          io.to(roomId).emit('startRehearsal') ;
+          handleSendingLyricsAndChords(roomId, song, lyrics, lyricsAndChords);
         })
 
         socket.on('adminEndRehearsal', (roomId) => {
-          io.to(roomId).emit('endRehearsal')
+          io.to(roomId).emit('endRehearsal');
         })
 
       socket.on('disconnect', () => {
@@ -105,4 +106,4 @@ const setUpSocket = (server) => {
     })
 }
 
-export {setUpSocket}
+export {setUpSocket};
