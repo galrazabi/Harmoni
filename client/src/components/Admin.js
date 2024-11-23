@@ -9,6 +9,10 @@ export const Admin = () => {
 
     const { socket, roomId, setRoomId, setCookie, navigate, isLive } = useContext(SocketContext);
 
+    const goToLive = (song) => {
+        socket.emit('adminStartRehearsal', {roomId, song});
+    }
+    
     const endRehearsal = () => {
         socket.emit("adminEndRehearsal", roomId);
     }
@@ -28,26 +32,29 @@ export const Admin = () => {
     }
 
     return (
-        <div className="container-fullscreen">
-        <div className="nav-bar">
-            <button className="logout-btn" onClick={logout}>Logout</button>
-            {roomId !== "" && <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>}
-            { isLive && <button className="logout-btn" onClick={endRehearsal}>Quit</button>}
-        </div>  
-            { roomId === "" ? 
-                <RoomSelection />
-             : ( !isLive ? 
-                    <SearchSong /> 
-                 : 
-                    <Live />
-            )}
 
-            { roomId !== "" &&
-                <div>
-                    <br/>
-                    <button onClick={() => navigator.clipboard.writeText(roomId)}>Press to copy the Room ID</button>
-                </div>
-            }
-        </div>
+            <div className="container-fullscreen">
+                <div className="nav-bar">
+                    <button className="logout-btn" onClick={logout}>Logout</button>
+                    {roomId !== "" && <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>}
+                    { isLive && <button className="logout-btn" onClick={endRehearsal}>Quit</button>}
+                </div>  
+                { roomId === "" ? 
+                    <RoomSelection />
+                : ( !isLive ? 
+                        <SearchSong goToLive={goToLive} /> 
+                    : 
+                        <Live />
+                )}
+
+                { roomId !== "" &&
+                    <div>
+                        <br/>
+                        <button onClick={() => navigator.clipboard.writeText(roomId)}>Press to copy the Room ID</button>
+                    </div>
+                }
+            </div>
+
+
     )
 }

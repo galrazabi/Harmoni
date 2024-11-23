@@ -1,6 +1,6 @@
 import { useGetIsAdmin } from "../hooks/useGetIsAdmin"
 import { SocketContext } from "./RehearsalRoom"
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 
 
 export const RoomSelection = () => { 
@@ -8,7 +8,6 @@ export const RoomSelection = () => {
     const { socket } = useContext(SocketContext);
     const isAdmin = useGetIsAdmin();
     const [roomID, setRoomID ] = useState("");
-
 
     const onSubmit = (event) => {
         event.preventDefault();

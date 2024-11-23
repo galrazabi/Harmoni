@@ -3,13 +3,9 @@ import { SocketContext } from "./RehearsalRoom"
 import './Results.css'
 
 
-export const Results = ({songsList, setIsMain}) => {
+export const Results = ({songsList, setIsMain, goToLive}) => {
 
     const {socket, roomId} = useContext(SocketContext);
-
-    const goToLive = (song) => {
-        socket.emit('adminStartRehearsal', {roomId, song});
-    }
     
     return (
             <div  className="container-fullscreen">

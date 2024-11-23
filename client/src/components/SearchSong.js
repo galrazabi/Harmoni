@@ -3,7 +3,7 @@ import {MainAdmin} from './MainAdmin'
 import { useState } from 'react'
 
 
-export const SearchSong = () => {
+export const SearchSong = ({goToLive}) => {
 
     const [songsList , setSongsList ] = useState([]);
     const [isMain, setIsMain ] = useState(true);
@@ -12,7 +12,7 @@ export const SearchSong = () => {
         <div>
             {isMain ? 
                 <MainAdmin setSongsList={setSongsList} setIsMain={setIsMain} /> :
-                <Results songsList= {songsList} setIsMain={setIsMain}/>
+                <Results songsList= {songsList} setIsMain={setIsMain} goToLive={goToLive} />
             }
         </div>
     )

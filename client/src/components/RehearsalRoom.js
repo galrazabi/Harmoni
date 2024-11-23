@@ -84,10 +84,10 @@ export const RehearsalRoom = () => {
 
     return (
         <SocketContext.Provider value={{ socket, roomId, setRoomId, setCookie, navigate, isLive, songData, lyricsOrChords }}>
-
+    
             { isAdmin ? <Admin /> : <User /> }
 
-    </SocketContext.Provider>
+        </SocketContext.Provider>
     );
 
 }
