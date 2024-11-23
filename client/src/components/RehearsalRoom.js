@@ -3,11 +3,9 @@ import { useGetIsAdmin } from "../hooks/useGetIsAdmin"
 import { useGetUserId } from '../hooks/useGetUserId'
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'
-import { MainPlayer } from './MainPlayer'
-import { SearchSong } from "./SearchSong";
 import { io } from 'socket.io-client';
-import {Live} from './Live'
-import { RoomSelection } from "./RoomSelection";
+import { Admin } from "./Admin";
+import { User } from "./User";
 
 
 
@@ -20,11 +18,12 @@ export const RehearsalRoom = () => {
     const [lyricsOrChords, setLyricsOrChords] = useState([]);
     const [songData, setSongData] = useState({});
     const [roomId, setRoomId ] = useState("");
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    const [_, setCookie] = useCookies(["access_token"]);
     const userId = useGetUserId();
     const isAdmin = useGetIsAdmin();
-    const [_, setCookie] = useCookies(["access_token"]);
+    
 
 
     useEffect(() => {
@@ -83,54 +82,10 @@ export const RehearsalRoom = () => {
     }, [userId, isAdmin]); 
 
 
-    const endRehearsal = () => {
-        socket.emit("adminEndRehearsal", roomId);
-    }
-
-    
-    const leaveRoom = () => {
-        if(roomId !== ""){
-            if (isAdmin) {
-                socket.emit("adminEndRehearsal", roomId);
-            }
-            socket.emit("leaveRoom", roomId);
-            setRoomId("");
-        }
-    }
-
-    const logout = () => {
-        if (isAdmin && isLive) { 
-            socket.emit("adminEndRehearsal", roomId);
-        }
-        setCookie("access_token", "");
-        navigate("/");
-    }
-
-
     return (
-        <SocketContext.Provider value={{ socket, roomId, leaveRoom, logout }}>
-            <div className="container-fullscreen">
-            <div className="nav-bar">
-                <button className="logout-btn" onClick={logout}>Logout</button>
-                {roomId !== "" && <button className="logout-btn" onClick={leaveRoom}>Leave Room</button>}
-                {isAdmin && isLive && <button className="logout-btn" onClick={endRehearsal}>Quit</button>}
-            </div>  
-                { roomId === "" ? 
-                    <RoomSelection />
-                 : ( !isLive ? 
-                        isAdmin ? <SearchSong /> : <MainPlayer />
-                     : 
-                        <Live songData={songData} lyricsOrChords={lyricsOrChords} />
-                )}
+        <SocketContext.Provider value={{ socket, roomId, setRoomId, setCookie, navigate, isLive, songData, lyricsOrChords }}>
 
-                {isAdmin && roomId !== "" &&
-                    <div>
-                        <br/>
-                        <button onClick={() => navigator.clipboard.writeText(roomId)}>Press to copy the Room ID</button>
-                    </div>
-                }
-
-            </div>
+            { isAdmin ? <Admin /> : <User /> }
 
     </SocketContext.Provider>
     );

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { SocketContext } from "./RehearsalRoom";
 import './Live.css'
 
 
-export const Live = ({songData, lyricsOrChords}) => {
+export const Live = () => {
 
-
+    const { songData, lyricsOrChords } = useContext(SocketContext);
     const [isScrolling, setIsScrolling] = useState(false);
 
     let scrollInterval;
