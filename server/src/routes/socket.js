@@ -14,7 +14,6 @@ const setUpSocket = (server) => {
       });
  
     const categorizeUserByInstrument = async (socket) => {
-
       const userId = socket.handshake.query.userId;
 
       const instrument = await getUserInstrumentFromDB( userId );
@@ -26,10 +25,50 @@ const setUpSocket = (server) => {
     io.on("connection", (socket) => {
 
         console.log("user connected: " + socket.id);
-        
         categorizeUserByInstrument(socket);
 
-        const handleSendingLyricsAndChords = (roomId, song, lyrics, lyricsAndChords) => {
+
+        const joinRoom = (roomId) => {
+          socket.join(roomId);
+          socket.emit('joinRoomSuccessfully', roomId);
+          console.log(`User ${socket.id} joined room ${roomId} `);
+        }
+
+
+        const handleCreateRoom = () => {
+          const roomId = uuidv4();
+          joinRoom(roomId);
+        }
+
+
+        const handleJoinRoom = (roomId) => {
+          const rooms = io.sockets.adapter.rooms;
+          if (rooms.has(roomId)) {
+            joinRoom(roomId);
+          } else {
+            socket.emit('error', 'Room does not exist');
+          }
+        }
+
+
+        const handleLeaveRoom = (roomId) => {
+          const rooms = io.sockets.adapter.rooms;
+          if (rooms.has(roomId)) {
+            socket.leave(roomId);
+            console.log(`User ${socket.id} left room ${roomId} `);
+          } else {
+            socket.emit('error', 'Room does not exist');
+          }
+        }
+
+
+        const handleAdminStartRehearsal = ({roomId, song}) => {
+          console.log('admin Start Rehearsal') ;
+
+          const lyrics = getLyrics(song);
+          const lyricsAndChords = formatLyricsAndChords(song);
+
+          io.to(roomId).emit('startRehearsal');
 
           const roomSockets = io.sockets.adapter.rooms.get(roomId);
 
@@ -37,7 +76,7 @@ const setUpSocket = (server) => {
             socket.emit('error', `Room ${roomId} does not exist or is empty`);
             return;
           }
-
+          
           roomSockets.forEach((socketId) => {
             const userSocket = io.sockets.sockets.get(socketId);
 
@@ -53,57 +92,22 @@ const setUpSocket = (server) => {
             }
 
           })
-
         }
 
-        const handleJoinRoom = (roomId) => {
 
-          socket.join(roomId);
-          socket.emit('joinRoomSuccessfully', roomId);
-          console.log(`User ${socket.id} joined room ${roomId} `);
-          
-        }
-
-        socket.on('createRoom', () => {
-          const roomId = uuidv4();
-          handleJoinRoom(roomId);
-        })
-
-        socket.on('joinRoom', (roomId) => {
-          const rooms = io.sockets.adapter.rooms;
-          if (rooms.has(roomId)) {
-            handleJoinRoom(roomId);
-          } else {
-            socket.emit('error', 'Room does not exist');
-          }
-        })
-
-        socket.on('leaveRoom', (roomId) => {
-          const rooms = io.sockets.adapter.rooms;
-          if (rooms.has(roomId)) {
-            socket.leave(roomId);
-            console.log(`User ${socket.id} left room ${roomId} `);
-          } else {
-            socket.emit('error', 'Room does not exist');
-          }
-        })
-
-        socket.on('adminStartRehearsal', ({roomId, song}) => { 
-          console.log('admin Start Rehearsal') ;
-          const lyrics = getLyrics(song);
-          const lyricsAndChords = formatLyricsAndChords(song);
-          io.to(roomId).emit('startRehearsal') ;
-          handleSendingLyricsAndChords(roomId, song, lyrics, lyricsAndChords);
-        })
-
-        socket.on('adminEndRehearsal', (roomId) => {
+        const handleAdminEndRehearsal = (roomId) => {
           io.to(roomId).emit('endRehearsal');
-        })
+        }
 
-      socket.on('disconnect', () => {
-        
-      });
-    })
+
+        socket.on('createRoom',handleCreateRoom)
+        socket.on('joinRoom', handleJoinRoom)
+        socket.on('leaveRoom', handleLeaveRoom)
+        socket.on('adminStartRehearsal', handleAdminStartRehearsal)
+        socket.on('adminEndRehearsal', handleAdminEndRehearsal)
+        socket.on('disconnect', () => {});
+
+      })
 }
 
 export {setUpSocket};
