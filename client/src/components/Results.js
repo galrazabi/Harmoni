@@ -1,11 +1,7 @@
-import { useContext } from "react";
-import { SocketContext } from "./RehearsalRoom"
 import './Results.css'
 
 
 export const Results = ({songsList, setIsMain, goToLive}) => {
-
-    const {socket, roomId} = useContext(SocketContext);
     
     return (
             <div  className="container-fullscreen">
