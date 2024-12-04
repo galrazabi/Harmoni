@@ -29,8 +29,8 @@ Harmoni is a real-time web application that allows users to connect and collabor
 
 ### Prerequisites
 
-- **Node.js** (v14 or above)
-- **MongoDB** (running instance)
+- **Node.js** 
+- **MongoDB** 
 
 ### Steps
 
